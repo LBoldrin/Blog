@@ -16,6 +16,8 @@
     <![endif]-->
     <!-- Custom styles for this template -->
     <link href="carousel.css" rel="stylesheet">
+      
+  
   </head>
   
   
@@ -37,18 +39,24 @@
             
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#about">Under Construction</a></li>
+                <li><a href="#contact">Under Construction</a></li>
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tutorials<span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="./Statistics.html">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
+                     <li class="dropdown-header">Essentials in R and Python</li>
+                    <li><a href="Python_computing_essentials.html">Python computing essentials</a></li>
                     <li class="divider"></li>
-                    <li class="dropdown-header">Nav header</li>
-                    <li><a href="#">Separated link</a></li>
-                    <li><a href="#">One more separated link</a></li>
+                    <li class="dropdown-header">Graphics</li>
+                    <li><a href="Graphical_exploratory_data_analysis_with_R.html">Graphical exploratory data analysis with R</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Statistics</li>
+                    <li><a href="#">Work in progress</a></li>
+                    <li><a href="#">Work in progress</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Machine Learning</li>
+                    <li><a href="#">Work in progress</a></li>
+                    <li><a href="#">Work in progress</a></li>
                   </ul>
                 </li>
               </ul>
@@ -58,8 +66,7 @@
 
       </div>
     </div>
-<!---------------------- Navigation bar------------------------->  
-
+<!---------------------- Navigation bar-------------------------> 
 
     <!-- Carousel
     ================================================== -->
@@ -73,20 +80,20 @@
         <div class="item active">
           <img src="./Background_01_Pantheon.jpg" alt="First slide">
           <div class="container">
-            <div class="carousel-caption">
-              <h1>Example headline.</h1>
-              <p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+            <div class="carousel-caption hidden-xs">
+              <h1>A collection of tutorials in Statistics, Data analysis and Machine Learning</h1>
+              <p>With the aid of Python, R and Octave.</p>
+              <p><a class="btn btn-lg btn-default" href="https://github.com/LBoldrin/Blog/tree/gh-pages" role="button">GitHub</a></p>
             </div>
           </div>
         </div>
         <div class="item">
           <img src="./Background_02_Basilica.jpg" alt="Second slide">
           <div class="container">
-            <div class="carousel-caption">
-              <h1>Another example headline.</h1>
-              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+            <div class="carousel-caption hidden-xs">
+              <h1>A collection of tutorials in Statistics, Data analysis and Machine Learning</h1>
+              <p>With the aid of Python, R and Octave.</p>
+              <p><a class="btn btn-lg btn-default" href="https://github.com/LBoldrin/Blog/tree/gh-pages" role="button">GitHub</a></p>
             </div>
           </div>
         </div>
@@ -100,56 +107,88 @@
         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
       </a>
-    </div><!-- /.carousel -->
+    </div>
 
+    <!-- /.carousel -->
 
-
+      
 <!-- Main Content -->
     <div class="container">
-        <div class="row">
+      
+      
+      <hr class="featurette-divider">
+      <div class="row featurette">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <h2 class="featurette-heading">Welcome</span></h2>
+          <p class="lead" style="text-align: justify">
+          The aim of this blog is to collect a set of tutorials on the basic foundations of data
+          analytics, statistical analysis and machine learning, with the aid of
+          <a href="https://www.r-project.org">R</a>, <a href="https://www.python.org">Python</a>
+          and <a href="https://www.gnu.org/software/octave">Octave.</a></p>
+          
+          <p class="lead" style="text-align: justify">
+          Tools like <a href="https://ipython.org">Ipython</a> and <a href="https://yihui.name/knitr/">knitr</a>
+          in R allow to quickly author technical documents with embedded code, figures and results. The
+          possibility to output such technical notes in html format makes it easy to directly edit
+          such contents and host them via <a href="https://github.com/LBoldrin/Blog/tree/gh-pages">GitHub pages</a>.
+          </p>
+          
+          <p class="lead" style="text-align: justify">
+          Since the start of my PhD studies in aerospace engineering, I have cultivated a general interest
+          in high-level programming languages and in data science subjects. I hope to share some of
+          my personal understanding through this blog.
+            </p> 
+           <p class="lead" style="text-align: justify">
+          Having said this, happy computing! 
+          </p>         
+          <hr> 
+
+
+        </div>
+      </div>
+      
+      
+      
+      
+<!--        <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <h2>Python computing essentials</h2>
-                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod.
-                Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus,
-                porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.
-                
+              
+                 <h3>Computing in Python:TEST</h3>
+                <p style="text-align: justify">
+                 Sample tutorial on computing in Python.</p>
                                 <!-- Pager -->
-                <ul class="pager">
+<!--                <ul class="pager">
                     <li class="next">
-                        <a href="Test.html">Read more &raquo;</a>
+                        <a href="Python_computing_essentials.html">Test webpage &raquo;</a>
                     </li>
                 </ul>
                 <hr>
+                <h3>Graphical data analysis with R:TEST</h3>
+                <p style="text-align: justify">
+                 Sample tutorial on plotting with ggplot2 library in R.</p>
+                                <!-- Pager -->
+<!--                <ul class="pager">
+                    <li class="next">
+                        <a href="Graphical_exploratory_data_analysis_with_R.html">Test webpage &raquo;</a>
+                    </li>
+                </ul>
+                <hr> 
             </div>
-        </div>
+        </div>-->
             
-            
-            
-                <!-- FOOTER --> 
+                        
+    <!-- FOOTER --> 
         <footer>
         <p class="pull-right"><a href="#TOP">Back to top</a></p>
-        <p>&copy; 2015 </p>
+        <p>&copy; 2015. Webpage built with <a href='http://getbootstrap.com/'>Bootstrap</a> and rendered via
+        <a href='https://pages.github.com/'>Github pages</a>.</p>
       </footer>
+  
     </div>
 
+<!---------------------------------------- MAIN ------------------------------------------->
 
-
-    <!-- Marketing messaging and featurettes
-    ================================================== -->
-    <!-- Wrap the rest of the page in another container to center all the content. -->
-
-
-
-      <!-- Three columns of text below the carousel -->
-     
-
-      
-
-
-
-
-    
-
+  
 <!------------------------------------ JAVASCRIPT ----------------------------------------->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

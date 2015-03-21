@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<!----------------------------------- PREAMBLE -------------------------------------------->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Graphical exploratory data analysis with R</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+     
+    <!-- CSS for code highlighting in Python Code cells-->
+      <style type="text/css"> 
+      .highlight .hll { background-color: #ffffcc }
+      .highlight  { background: #f8f8f8; }
+      .highlight .c { color: #408080; font-style: italic } /* Comment */
+      .highlight .err { border: 1px solid #FF0000 } /* Error */
+      .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+      .highlight .o { color: #666666 } /* Operator */
+      .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+      .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+      .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+      .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+      .highlight .gd { color: #A00000 } /* Generic.Deleted */
+      .highlight .ge { font-style: italic } /* Generic.Emph */
+      .highlight .gr { color: #FF0000 } /* Generic.Error */
+      .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+      .highlight .gi { color: #00A000 } /* Generic.Inserted */
+      .highlight .go { color: #888888 } /* Generic.Output */
+      .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+      .highlight .gs { font-weight: bold } /* Generic.Strong */
+      .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+      .highlight .gt { color: #0044DD } /* Generic.Traceback */
+      .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+      .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+      .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+      .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+      .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+      .highlight .kt { color: #B00040 } /* Keyword.Type */
+      .highlight .m { color: #666666 } /* Literal.Number */
+      .highlight .s { color: #BA2121 } /* Literal.String */
+      .highlight .na { color: #7D9029 } /* Name.Attribute */
+      .highlight .nb { color: #008000 } /* Name.Builtin */
+      .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+      .highlight .no { color: #880000 } /* Name.Constant */
+      .highlight .nd { color: #AA22FF } /* Name.Decorator */
+      .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+      .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+      .highlight .nf { color: #0000FF } /* Name.Function */
+      .highlight .nl { color: #A0A000 } /* Name.Label */
+      .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+      .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+      .highlight .nv { color: #19177C } /* Name.Variable */
+      .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+      .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+      .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+      .highlight .mf { color: #666666 } /* Literal.Number.Float */
+      .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+      .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+      .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+      .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+      .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+      .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+      .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+      .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+      .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+      .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+      .highlight .sx { color: #008000 } /* Literal.String.Other */
+      .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+      .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+      .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+      .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+      .highlight .vc { color: #19177C } /* Name.Variable.Class */
+      .highlight .vg { color: #19177C } /* Name.Variable.Global */
+      .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+      .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+      </style>
+      
+    <!-- CSS styling for body section and navigation sidebar-->
+      <style>      
+      body { padding-top: 50px;  }
+      @media screen and (max-width: 768px) {
+          body { padding-top: 50px; }
+      }
+      .fixed {
+          position: fixed;
+      }
+      /* sidebar */
+      .bs-docs-sidebar {
+          padding-left: 20px;
+          margin-top: 20px;
+          margin-bottom: 20px;
+      }
+      /* all links */
+      .bs-docs-sidebar .nav>li>a {
+          color: #999;
+          border-left: 2px solid transparent;
+          padding: 4px 20px;
+          font-size: 13px;
+          font-weight: 400;
+      }
+      /* nested links */
+      .bs-docs-sidebar .nav .nav>li>a {
+          padding-top: 1px;
+          padding-bottom: 1px;
+          padding-left: 30px;
+          font-size: 12px;
+      }
+      /* active & hover links */
+      .bs-docs-sidebar .nav>.active>a, 
+      .bs-docs-sidebar .nav>li>a:hover, 
+      .bs-docs-sidebar .nav>li>a:focus {
+          color: #5A5A5E;                 
+          text-decoration: none;          
+          background-color: transparent;  
+          border-left-color: #5A5A5E; 
+      }
+      /* all active links */
+      .bs-docs-sidebar .nav>.active>a, 
+      .bs-docs-sidebar .nav>.active:hover>a,
+      .bs-docs-sidebar .nav>.active:focus>a {
+          font-weight: 700;
+      }
+      /* nested active links */
+      .bs-docs-sidebar .nav .nav>.active>a, 
+      .bs-docs-sidebar .nav .nav>.active:hover>a,
+      .bs-docs-sidebar .nav .nav>.active:focus>a {
+          font-weight: 500;
+      }
+                 
+      /* hide inactive nested list */
+      .bs-docs-sidebar .nav ul.nav {
+          display: none;           
+      }
+      /* show active nested list */
+      .bs-docs-sidebar .nav>.active>ul.nav {
+          display: block;           
+      }
+
+
+      a.anchor{display: block; position: relative; top: -50px; visibility: hidden;}
+      </style>
+  </head>
+<!----------------------------------- PREAMBLE -------------------------------------------->
+
+
+<!---------------------------------------- MAIN ------------------------------------------->
+<body>
+ 
+ 
+<!---------------------- Navigation bar------------------------->  
+  <div class="navbar-wrapper">
+      <div class="container">
+
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="Home.html">Home</a>
+            </div>
+            
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li><a href="#about">Under Construction</a></li>
+                <li><a href="#contact">Under Construction</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tutorials<span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                     <li class="dropdown-header">Essentials in R and Python</li>
+                    <li><a href="Python_computing_essentials.html">Python computing essentials</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Graphics</li>
+                    <li><a href="Graphical_exploratory_data_analysis_with_R.html">Graphical exploratory data analysis with R</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Statistics</li>
+                    <li><a href="#">Work in progress</a></li>
+                    <li><a href="#">Work in progress</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Machine Learning</li>
+                    <li><a href="#">Work in progress</a></li>
+                    <li><a href="#">Work in progress</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+      </div>
+    </div>
+<!---------------------- Navigation bar------------------------->  
+  
+  
+<!-------------------------------------------------------------->  
+  <div class="container bs-docs-container">
+  <div class="row">
+    <!--Main Content -->
+    <div class="col-md-9" role="main">
+        <h1><a class="anchor"></a>Graphical exploratory data analysis with R</h1>
+
+<div class="alert alert-block alert-warning alert-text-normal" style='text-align: justify'> 
+<h3 id="Preamble"><a class="anchor" href="#Preamble"></a>Preamble</h3>
+<ul>
+<li>Code cells here presented have been run in IPython environment as provided by the Anaconda Python distribution (retrievable at <a href="http://continuum.io/downloads">http://continuum.io/downloads</a>).</li>
+<li><p>In order to interface R with Python/IPython the R extension has been loaded with <code>%load_ext rpy2.ipython</code>.
+For more information see <a href="http://rpy.sourceforge.net/rpy2.html">http://rpy.sourceforge.net/rpy2.html</a>.
+A quick introduction on the basics commands required to run R inside IPython cells can be found
+<a href="http://nbviewer.ipython.org/github/davidrpugh/cookbook-code/blob/master/notebooks/chapter07_stats/08_r.ipynb">here</a>.
+</p>
+</li>
+<li><p>Summary</p>
+<ol>
+<li>Anaconda 2.1.0 (x86_64) with Python 2.7.9 </li>
+<li>R version 3.1.1 (2014-07-10) </li>
+<li>Mac OS X 10.9.5</li>
+</ol></li>
+</ul>
+</div>
+        
+<h2> <a class="anchor" id="Heights-Dataset"></a> Heights Dataset</h2>
+<ul>
+<li><strong>Data source</strong>: Pearson-Lee dataset <code>heights</code> available from <code>alr3</code> library in R.</li>
+<li><strong>Description of dataset</strong>: a dataframe with 1375 observations of 2 variables. The dataset reports the heights in
+inches of mothers and their daughters, as collected by Karl Pearson in his study on over 1100 families in England
+from 1893 to 1898. Original data was reported as a frequency table to the nearest integer inch. Current dataset
+[see @Weisberg_2005] takes into account a rounding error, and allows for scatterplots with no superimposition of
+data points.</li>
+</ul>
+
+<div class="highlight">
+<pre><span class="o">%%</span><span class="k">capture</span>
+%load_ext rpy2.ipython
+from __future__ import print_function
+from IPython.display import SVG
+</pre></div>
+
+
+<div class="highlight"><pre><span class="o">%%</span>R
+<span class="c1"># Loading libraries</span>
+<span class="kn">library</span><span class="p">(</span>alr3<span class="p">);</span><span class="kn">library</span><span class="p">(</span>ggplot2<span class="p">);</span>
+<span class="c1"># Rename variables Mheight and Dheight to Mother and Daughter respectively.</span>
+<span class="kp">colnames</span><span class="p">(</span>heights<span class="p">)</span> <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;Mother&#39;</span><span class="p">,</span><span class="s">&#39;Daughter&#39;</span><span class="p">)</span>
+<span class="c1"># Dataset analysis</span>
+str<span class="p">(</span>heights<span class="p">)</span>
+</pre></div>
+ 
+ 
+
+
+<pre style="background-color: transparent; border: 0px ">&apos;data.frame&apos;:	1375 obs. of  2 variables:
+ $ Mother  : num  59.7 58.2 60.6 60.7 61.8 55.5 55.4 56.8 57.5 57.3 ...
+ $ Daughter: num  55.1 56.5 56 56.8 56 57.9 57.1 57.6 57.2 57.1 ...
+</pre>
+
+
+<p>Rounding off all numerical entries to the nearest integer and building a contingency table
+of the counts at each combination of mother and daughter heights.</p>
+
+<div class=" highlight hl-ipython2"><pre><span class="o">%%</span>R
+<span class="c1"># Building Frequency Table interpreting Mother and Daughter variables as factors. The rounding operation</span>
+<span class="c1">#  is performed via round(...)</span>
+Freq_Table <span class="o">&lt;-</span> <span class="kp">as.data.frame</span><span class="p">(</span><span class="kp">table</span><span class="p">(</span><span class="kp">round</span><span class="p">(</span>heights<span class="o">$</span>Mother<span class="p">),</span><span class="kp">round</span><span class="p">(</span>heights<span class="o">$</span>Daughter<span class="p">)))</span>
+<span class="kp">colnames</span><span class="p">(</span>Freq_Table<span class="p">)</span> <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;Mother&#39;</span><span class="p">,</span><span class="s">&#39;Daughter&#39;</span><span class="p">,</span><span class="s">&#39;Counts&#39;</span><span class="p">)</span>
+<span class="c1"># Top three Mother-Daughter combinations with highest counts</span>
+<span class="kp">head</span><span class="p">(</span>Freq_Table<span class="p">[</span><span class="kp">order</span><span class="p">(</span><span class="o">-</span>Freq_Table<span class="o">$</span>Counts<span class="p">),],</span>n<span class="o">=</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+
+<pre style="background-color: transparent; border: 0px ">    Mother Daughter Counts
+161     62       64     47
+127     62       62     46
+162     63       64     42
+</pre>
+
+<h2><a class="anchor" id="Example-1.0"></a>Example 1.0</h2>
+<p>Scatterplot with each point size proportional to its associated number of counts. As expected, bigger dots correspond
+to coordinates $\{62,64\},\{62,62\}$ etc.</p>
+
+<div class=" highlight hl-ipython2"><pre><span class="o">%%</span>R
+Scatter01 <span class="o">&lt;-</span> ggplot<span class="p">(</span>Freq_Table<span class="p">,</span>aes<span class="p">(</span>x<span class="o">=</span><span class="kp">as.numeric</span><span class="p">(</span><span class="kp">as.vector</span><span class="p">(</span>Mother<span class="p">)),</span>y<span class="o">=</span><span class="kp">as.numeric</span><span class="p">(</span><span class="kp">as.vector</span><span class="p">(</span>Daughter<span class="p">))))</span><span class="o">+</span>
+  geom_point<span class="p">(</span>pch <span class="o">=</span> <span class="m">20</span><span class="p">,</span> col <span class="o">=</span> <span class="s">&quot;black&quot;</span><span class="p">,</span> bg <span class="o">=</span> <span class="s">&quot;grey&quot;</span><span class="p">,</span>cex <span class="o">=</span> <span class="m">0.25</span> <span class="o">*</span> Freq_Table<span class="o">$</span>Count<span class="p">)</span><span class="o">+</span>
+  xlab<span class="p">(</span><span class="s">&#39;Mother&#39;</span><span class="p">)</span><span class="o">+</span>
+  ylab<span class="p">(</span><span class="s">&#39;Daughter&#39;</span><span class="p">)</span><span class="o">+</span>
+  theme<span class="p">(</span>axis.text.x<span class="o">=</span>element_text<span class="p">(</span>angle<span class="o">=</span><span class="m">0</span><span class="p">,</span> size<span class="o">=</span><span class="m">10</span><span class="p">,</span> vjust<span class="o">=</span><span class="m">0.5</span><span class="p">,</span>color<span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>axis.text.y<span class="o">=</span>element_text<span class="p">(</span>angle<span class="o">=</span><span class="m">0</span><span class="p">,</span> size<span class="o">=</span><span class="m">10</span><span class="p">,</span> vjust<span class="o">=</span><span class="m">0.5</span><span class="p">,</span>color<span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>axis.title.x<span class="o">=</span>element_text<span class="p">(</span>angle<span class="o">=</span><span class="m">0</span><span class="p">,</span> size<span class="o">=</span><span class="m">12</span><span class="p">,</span>color<span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">,</span>face<span class="o">=</span><span class="s">&#39;bold&#39;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>axis.title.y<span class="o">=</span>element_text<span class="p">(</span>angle<span class="o">=</span><span class="m">90</span><span class="p">,</span> size<span class="o">=</span><span class="m">12</span><span class="p">,</span>color<span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">,</span>face<span class="o">=</span><span class="s">&#39;bold&#39;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>panel.background <span class="o">=</span> element_rect<span class="p">(</span>fill <span class="o">=</span> <span class="s">&#39;white&#39;</span><span class="p">,</span> colour <span class="o">=</span> <span class="s">&#39;black&#39;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>panel.grid.minor <span class="o">=</span> element_line<span class="p">(</span>colour<span class="o">=</span><span class="s">&quot;lightgrey&quot;</span><span class="p">,</span>linetype<span class="o">=</span><span class="s">&quot;dashed&quot;</span><span class="p">,</span> size<span class="o">=</span><span class="m">0.5</span><span class="p">))</span>
+ggsave<span class="p">(</span>file<span class="o">=</span><span class="s">&quot;Scatter01.svg&quot;</span><span class="p">,</span> plot<span class="o">=</span>Scatter01<span class="p">,</span> width<span class="o">=</span><span class="m">7</span><span class="p">,</span> height<span class="o">=</span><span class="m">5</span><span class="p">)</span>
+</pre></div>
+
+<div class=" highlight hl-ipython2"><pre><span class="n">SVG</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s">&#39;Scatter01.svg&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+
+
+<img width="100%" src="Scatter01.svg"></img>
+
+
+<h2><a class="anchor" id="Example-1.1"></a>Example 1.1</h2>
+<p>Modification of the previous scatterplot, individuating the dot entry with the highest associated counts.</p>
+
+
+
+<div class=" highlight hl-ipython2"><pre><span class="o">%%</span>R
+Scatter02 <span class="o">&lt;-</span> ggplot<span class="p">(</span>Freq_Table<span class="p">,</span>aes<span class="p">(</span>x<span class="o">=</span><span class="kp">as.numeric</span><span class="p">(</span><span class="kp">as.vector</span><span class="p">(</span>Mother<span class="p">)),</span>y<span class="o">=</span><span class="kp">as.numeric</span><span class="p">(</span><span class="kp">as.vector</span><span class="p">(</span>Daughter<span class="p">))))</span><span class="o">+</span>
+  geom_point<span class="p">(</span>pch <span class="o">=</span> <span class="m">20</span><span class="p">,</span> col <span class="o">=</span> <span class="m">1</span><span class="o">+</span><span class="p">(</span>Freq_Table<span class="o">$</span>Count<span class="o">==</span><span class="kp">max</span><span class="p">(</span>Freq_Table<span class="o">$</span>Count<span class="p">)),</span> bg <span class="o">=</span> <span class="s">&quot;grey&quot;</span><span class="p">,</span>cex <span class="o">=</span> <span class="m">0.25</span> <span class="o">*</span> Freq_Table<span class="o">$</span>Count<span class="p">)</span><span class="o">+</span>
+  xlab<span class="p">(</span><span class="s">&#39;Mother&#39;</span><span class="p">)</span><span class="o">+</span>
+  ylab<span class="p">(</span><span class="s">&#39;Daughter&#39;</span><span class="p">)</span><span class="o">+</span>
+  theme<span class="p">(</span>axis.text.x<span class="o">=</span>element_text<span class="p">(</span>angle<span class="o">=</span><span class="m">0</span><span class="p">,</span> size<span class="o">=</span><span class="m">10</span><span class="p">,</span> vjust<span class="o">=</span><span class="m">0.5</span><span class="p">,</span>color<span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>axis.text.y<span class="o">=</span>element_text<span class="p">(</span>angle<span class="o">=</span><span class="m">0</span><span class="p">,</span> size<span class="o">=</span><span class="m">10</span><span class="p">,</span> vjust<span class="o">=</span><span class="m">0.5</span><span class="p">,</span>color<span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>axis.title.x<span class="o">=</span>element_text<span class="p">(</span>angle<span class="o">=</span><span class="m">0</span><span class="p">,</span> size<span class="o">=</span><span class="m">12</span><span class="p">,</span>color<span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">,</span>face<span class="o">=</span><span class="s">&#39;bold&#39;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>axis.title.y<span class="o">=</span>element_text<span class="p">(</span>angle<span class="o">=</span><span class="m">90</span><span class="p">,</span> size<span class="o">=</span><span class="m">12</span><span class="p">,</span>color<span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">,</span>face<span class="o">=</span><span class="s">&#39;bold&#39;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>panel.background <span class="o">=</span> element_rect<span class="p">(</span>fill <span class="o">=</span> <span class="s">&#39;white&#39;</span><span class="p">,</span> colour <span class="o">=</span> <span class="s">&#39;black&#39;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>panel.grid.minor <span class="o">=</span> element_line<span class="p">(</span>colour<span class="o">=</span><span class="s">&quot;lightgrey&quot;</span><span class="p">,</span>linetype<span class="o">=</span><span class="s">&quot;dashed&quot;</span><span class="p">,</span> size<span class="o">=</span><span class="m">0.5</span><span class="p">))</span>
+ggsave<span class="p">(</span>file<span class="o">=</span><span class="s">&quot;Scatter02.svg&quot;</span><span class="p">,</span> plot<span class="o">=</span>Scatter02<span class="p">,</span> width<span class="o">=</span><span class="m">7</span><span class="p">,</span> height<span class="o">=</span><span class="m">5</span><span class="p">)</span>
+</pre></div>
+
+<div class=" highlight hl-ipython2"><pre><span class="n">SVG</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s">&#39;Scatter02.svg&#39;</span><span class="p">)</span>
+</pre></div>
+
+<img width="100%" src="Scatter02.svg"></img>
+
+
+<h2><a class="anchor" id="Example-1.2"></a>Example 1.2</h2><p>Graphical subsetting of numerical entries with counts above user-defined threshold.</p>
+
+
+<div class=" highlight hl-ipython2"><pre><span class="o">%%</span>R
+Scatter03 <span class="o">&lt;-</span> ggplot<span class="p">(</span>Freq_Table<span class="p">,</span>aes<span class="p">(</span>x<span class="o">=</span><span class="kp">as.numeric</span><span class="p">(</span><span class="kp">as.vector</span><span class="p">(</span>Mother<span class="p">)),</span>y<span class="o">=</span><span class="kp">as.numeric</span><span class="p">(</span><span class="kp">as.vector</span><span class="p">(</span>Daughter<span class="p">))))</span><span class="o">+</span>
+  geom_point<span class="p">(</span>pch <span class="o">=</span> <span class="m">20</span><span class="p">,</span> col <span class="o">=</span> <span class="m">1</span><span class="o">+</span><span class="p">(</span>Freq_Table<span class="o">$</span>Count<span class="o">&gt;</span><span class="m">10</span><span class="p">),</span>cex <span class="o">=</span> <span class="m">0.25</span> <span class="o">*</span> Freq_Table<span class="o">$</span>Count<span class="p">)</span><span class="o">+</span>
+  xlab<span class="p">(</span><span class="s">&#39;Mother&#39;</span><span class="p">)</span><span class="o">+</span>
+  ylab<span class="p">(</span><span class="s">&#39;Daughter&#39;</span><span class="p">)</span><span class="o">+</span>
+  theme<span class="p">(</span>axis.text.x<span class="o">=</span>element_text<span class="p">(</span>angle<span class="o">=</span><span class="m">0</span><span class="p">,</span> size<span class="o">=</span><span class="m">10</span><span class="p">,</span> vjust<span class="o">=</span><span class="m">0.5</span><span class="p">,</span>color<span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>axis.text.y<span class="o">=</span>element_text<span class="p">(</span>angle<span class="o">=</span><span class="m">0</span><span class="p">,</span> size<span class="o">=</span><span class="m">10</span><span class="p">,</span> vjust<span class="o">=</span><span class="m">0.5</span><span class="p">,</span>color<span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>axis.title.x<span class="o">=</span>element_text<span class="p">(</span>angle<span class="o">=</span><span class="m">0</span><span class="p">,</span> size<span class="o">=</span><span class="m">12</span><span class="p">,</span>color<span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">,</span>face<span class="o">=</span><span class="s">&#39;bold&#39;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>axis.title.y<span class="o">=</span>element_text<span class="p">(</span>angle<span class="o">=</span><span class="m">90</span><span class="p">,</span> size<span class="o">=</span><span class="m">12</span><span class="p">,</span>color<span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">,</span>face<span class="o">=</span><span class="s">&#39;bold&#39;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>panel.background <span class="o">=</span> element_rect<span class="p">(</span>fill <span class="o">=</span> <span class="s">&#39;white&#39;</span><span class="p">,</span> colour <span class="o">=</span> <span class="s">&#39;black&#39;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>panel.grid.minor <span class="o">=</span> element_line<span class="p">(</span>colour<span class="o">=</span><span class="s">&quot;lightgrey&quot;</span><span class="p">,</span>linetype<span class="o">=</span><span class="s">&quot;dashed&quot;</span><span class="p">,</span> size<span class="o">=</span><span class="m">0.5</span><span class="p">))</span>
+ggsave<span class="p">(</span>file<span class="o">=</span><span class="s">&quot;Scatter03.svg&quot;</span><span class="p">,</span> plot<span class="o">=</span>Scatter03<span class="p">,</span> width<span class="o">=</span><span class="m">7</span><span class="p">,</span> height<span class="o">=</span><span class="m">5</span><span class="p">)</span>
+</pre></div>
+
+<div class=" highlight hl-ipython2"><pre><span class="n">SVG</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s">&#39;Scatter03.svg&#39;</span><span class="p">)</span>
+</pre></div>
+
+<img width="100%" src="Scatter03.svg"></img>
+
+
+<h2><a class="anchor" id="Example-1.3"></a>Example 1.3</h2><p>Recalling the original dataset (with rounding error) and superimposing a simple regression
+line $y=\beta_0+\beta_1 x_i$.</p>
+
+<div class=" highlight hl-ipython2"><pre><span class="o">%%</span>R
+Scatter04 <span class="o">&lt;-</span> ggplot<span class="p">(</span>heights<span class="p">,</span>aes<span class="p">(</span>x<span class="o">=</span>Mother<span class="p">,</span>y<span class="o">=</span>Daughter<span class="p">))</span><span class="o">+</span>geom_point<span class="p">(</span>size<span class="o">=</span><span class="m">2</span><span class="p">,</span> col <span class="o">=</span> <span class="s">&quot;black&quot;</span><span class="p">)</span><span class="o">+</span>
+  geom_smooth<span class="p">(</span>method<span class="o">=</span><span class="s">&#39;lm&#39;</span><span class="p">,</span>col<span class="o">=</span><span class="s">&#39;red&#39;</span><span class="p">,</span>fill<span class="o">=</span><span class="kc">NA</span><span class="p">)</span><span class="o">+</span>
+  xlab<span class="p">(</span><span class="s">&#39;Mother&#39;</span><span class="p">)</span><span class="o">+</span>
+  ylab<span class="p">(</span><span class="s">&#39;Daughter&#39;</span><span class="p">)</span><span class="o">+</span>
+  theme<span class="p">(</span>axis.text.x<span class="o">=</span>element_text<span class="p">(</span>angle<span class="o">=</span><span class="m">0</span><span class="p">,</span> size<span class="o">=</span><span class="m">10</span><span class="p">,</span> vjust<span class="o">=</span><span class="m">0.5</span><span class="p">,</span>color<span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>axis.text.y<span class="o">=</span>element_text<span class="p">(</span>angle<span class="o">=</span><span class="m">0</span><span class="p">,</span> size<span class="o">=</span><span class="m">10</span><span class="p">,</span> vjust<span class="o">=</span><span class="m">0.5</span><span class="p">,</span>color<span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>axis.title.x<span class="o">=</span>element_text<span class="p">(</span>angle<span class="o">=</span><span class="m">0</span><span class="p">,</span> size<span class="o">=</span><span class="m">12</span><span class="p">,</span>color<span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">,</span>face<span class="o">=</span><span class="s">&#39;bold&#39;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>axis.title.y<span class="o">=</span>element_text<span class="p">(</span>angle<span class="o">=</span><span class="m">90</span><span class="p">,</span> size<span class="o">=</span><span class="m">12</span><span class="p">,</span>color<span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">,</span>face<span class="o">=</span><span class="s">&#39;bold&#39;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>panel.background <span class="o">=</span> element_rect<span class="p">(</span>fill <span class="o">=</span> <span class="s">&#39;white&#39;</span><span class="p">,</span> colour <span class="o">=</span> <span class="s">&#39;black&#39;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>panel.grid.minor <span class="o">=</span> element_line<span class="p">(</span>colour<span class="o">=</span><span class="s">&quot;lightgrey&quot;</span><span class="p">,</span>linetype<span class="o">=</span><span class="s">&quot;dashed&quot;</span><span class="p">,</span> size<span class="o">=</span><span class="m">0.5</span><span class="p">))</span>
+ggsave<span class="p">(</span>file<span class="o">=</span><span class="s">&quot;Scatter04.svg&quot;</span><span class="p">,</span> plot<span class="o">=</span>Scatter04<span class="p">,</span> width<span class="o">=</span><span class="m">7</span><span class="p">,</span> height<span class="o">=</span><span class="m">5</span><span class="p">)</span>
+</pre></div>
+
+
+<div class=" highlight hl-ipython2"><pre><span class="n">SVG</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s">&#39;Scatter03.svg&#39;</span><span class="p">)</span>
+</pre></div>
+
+<img width="100%" src="Scatter04.svg"></img>
+
+
+<p>Let's fit a simple linear regression model to the previous data.</p>
+
+<div class=" highlight hl-ipython2"><pre><span class="o">%%</span>R
+heights.lm <span class="o">&lt;-</span> lm<span class="p">(</span>Daughter<span class="o">~</span>Mother<span class="p">,</span>data<span class="o">=</span>heights<span class="p">)</span>
+<span class="kp">summary</span><span class="p">(</span>heights.lm<span class="p">)</span>
+</pre></div>
+
+<pre style="background-color: transparent; border: 0px ">
+Call:
+lm(formula = Daughter ~ Mother, data = heights)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-7.397 -1.529  0.036  1.492  9.053 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 29.91744    1.62247   18.44   &lt;2e-16 ***
+Mother       0.54175    0.02596   20.87   &lt;2e-16 ***
+---
+Signif. codes:  0 `***` 0.001 `**` 0.01 `*` 0.05 `.` 0.1 ` ` 1
+
+Residual standard error: 2.266 on 1373 degrees of freedom
+Multiple R-squared:  0.2408,	Adjusted R-squared:  0.2402 
+F-statistic: 435.5 on 1 and 1373 DF,  p-value: &lt; 2.2e-16
+
+</pre>
+
+<p>From the summary report of the model we can read the estimates of the intercept $\beta_0$
+and predictor $\beta_1$ (Mother). The two parameters define the red line plotted
+in the previous figure. Without inspecting the summary reports, model data can be
+directly retrieved in console. In order to achieve this we explore the name space
+associated to the summary of the model.</p>
+
+
+
+<div class=" highlight hl-ipython2"><pre><span class="o">%%</span>R
+<span class="kp">names</span><span class="p">(</span><span class="kp">summary</span><span class="p">(</span>heights.lm<span class="p">))</span>
+beta0 <span class="o">&lt;-</span> <span class="kp">summary</span><span class="p">(</span>heights.lm<span class="p">)</span><span class="o">$</span>coefficients<span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">]</span>
+beta1 <span class="o">&lt;-</span> <span class="kp">summary</span><span class="p">(</span>heights.lm<span class="p">)</span><span class="o">$</span>coefficients<span class="p">[</span><span class="m">2</span><span class="p">,</span><span class="m">1</span><span class="p">]</span>
+<span class="kt">c</span><span class="p">(</span>beta0<span class="p">,</span>beta1<span class="p">)</span>
+</pre></div>
+
+<pre style="background-color: transparent; border: 0px ">[1] 29.917437  0.541747
+</pre>
+
+
+
+<h2><a class="anchor", id="Example-1.4"></a>Example 1.4</h2><p>Construct a boxplot for each variable in the dataset. The <code>reshape2</code> library is particularly useful
+to reshape the dataset into a data.frame with Mother and Daughter as factor levels.</p>
+
+<div class=" highlight hl-ipython2"><pre><span class="o">%%</span>R
+<span class="kn">library</span><span class="p">(</span>reshape2<span class="p">)</span>
+heights_reshape <span class="o">&lt;-</span> melt<span class="p">(</span>heights<span class="p">)</span>
+str<span class="p">(</span>heights_reshape<span class="p">)</span>
+</pre></div>
+
+
+<pre style="background-color: transparent; border: 0px ">No id variables; using all as measure variables
+&apos;data.frame&apos;:	2750 obs. of  2 variables:
+ $ variable: Factor w/ 2 levels &quot;Mother&quot;,&quot;Daughter&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+ $ value   : num  59.7 58.2 60.6 60.7 61.8 55.5 55.4 56.8 57.5 57.3 ...
+</pre>
+
+<div class=" highlight hl-ipython2"><pre><span class="o">%%</span>R
+Boxplot <span class="o">&lt;-</span> ggplot<span class="p">(</span>heights_reshape<span class="p">,</span>aes<span class="p">(</span><span class="kp">factor</span><span class="p">(</span>variable<span class="p">),</span>value<span class="p">,</span>fill<span class="o">=</span>variable<span class="p">))</span><span class="o">+</span>
+  geom_boxplot<span class="p">()</span><span class="o">+</span>
+  xlab<span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span><span class="o">+</span>
+  ylab<span class="p">(</span><span class="s">&#39;Height&#39;</span><span class="p">)</span><span class="o">+</span>
+  theme<span class="p">(</span>axis.text.x<span class="o">=</span>element_text<span class="p">(</span>angle<span class="o">=</span><span class="m">0</span><span class="p">,</span> size<span class="o">=</span><span class="m">12</span><span class="p">,</span> vjust<span class="o">=</span><span class="m">0.5</span><span class="p">,</span>color<span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">,</span>face<span class="o">=</span><span class="s">&#39;bold&#39;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>axis.text.y<span class="o">=</span>element_text<span class="p">(</span>angle<span class="o">=</span><span class="m">0</span><span class="p">,</span> size<span class="o">=</span><span class="m">10</span><span class="p">,</span> vjust<span class="o">=</span><span class="m">0.5</span><span class="p">,</span>color<span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>axis.title.y<span class="o">=</span>element_text<span class="p">(</span>angle<span class="o">=</span><span class="m">90</span><span class="p">,</span> size<span class="o">=</span><span class="m">12</span><span class="p">,</span>color<span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">,</span>face<span class="o">=</span><span class="s">&#39;bold&#39;</span><span class="p">))</span><span class="o">+</span>
+  scale_fill_manual<span class="p">(</span>values <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;orange&quot;</span><span class="p">,</span> <span class="s">&quot;yellow&quot;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>panel.background <span class="o">=</span> element_rect<span class="p">(</span>fill <span class="o">=</span> <span class="s">&#39;white&#39;</span><span class="p">,</span> colour <span class="o">=</span> <span class="s">&#39;black&#39;</span><span class="p">))</span><span class="o">+</span>
+  theme<span class="p">(</span>panel.grid.minor <span class="o">=</span> element_line<span class="p">(</span>colour<span class="o">=</span><span class="s">&quot;lightgrey&quot;</span><span class="p">,</span>linetype<span class="o">=</span><span class="s">&quot;dashed&quot;</span><span class="p">,</span> size<span class="o">=</span><span class="m">0.5</span><span class="p">))</span>
+ggsave<span class="p">(</span>file<span class="o">=</span><span class="s">&quot;Boxplot.svg&quot;</span><span class="p">,</span> plot<span class="o">=</span>Boxplot<span class="p">,</span> width<span class="o">=</span><span class="m">7</span><span class="p">,</span> height<span class="o">=</span><span class="m">5</span><span class="p">)</span>
+</pre></div>
+
+
+<div class=" highlight hl-ipython2"><pre><span class="n">SVG</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s">&#39;Boxplot.svg&#39;</span><span class="p">)</span>
+</pre></div>
+
+<img width="100%" src="Boxplot.svg"></img>
+
+
+
+
+<h2>References</h2>
+
+<p>Weisberg, Sanford. 2005. <em>Applied Linear Regression</em>. Third Edition. Hoboken NJ: Wiley. <a href="http://www.stat.umn.edu/alr" class="uri">http://www.stat.umn.edu/alr</a>.</p>
+           
+                
+</div>
+<!-------------------------------------------------------------->      
+    
+    
+    
+    
+    
+    
+<!-------------------------------------------------------------->    
+    <!--Nav Bar --> 
+    <nav class="col-md-3 bs-docs-sidebar hidden-print hidden-xs hidden-sm">
+        <ul id="sidebar" class="nav nav-stacked fixed hidden-print hidden-xs hidden-sm" role="complementary">
+            <a href="#TOP" style="text-decoration: none;color: inherit; font-weight: bold">Graphical exploratory data analysis with R</a>
+            <li>
+                <a href="#Heights-Dataset">Heights Dataset</a>
+                <ul class="nav nav-stacked">
+                    <li><a href="#Example-1.0">Example 1.0</a></li>
+                    <li><a href="#Example-1.1">Example 1.1</a></li>
+                    <li><a href="#Example-1.2">Example 1.2</a></li>
+                    <li><a href="#Example-1.3">Example 1.3</a></li>
+                    <li><a href="#Example-1.4">Example 1.4</a></li>
+                </ul>
+            </li>
+
+    
+        </ul>
+    </nav>
+<!-------------------------------------------------------------->          
+    
+  </div>  <!-- close environemnt <div class="row"> -->
+    <!-- FOOTER --> 
+        <footer>
+        <p class="pull-right"><a href="#TOP">Back to top</a></p>
+        <p>&copy; 2015. Webpage built with <a href='http://getbootstrap.com/'>Bootstrap</a> and rendered via
+        <a href='https://pages.github.com/'>Github pages</a>.</p>
+      </footer>
+  
+  </div>  <!-- close environemnt <div class="container bs-docs-container"> -->
+  
+
+
+ </body>
+<!---------------------------------------- MAIN ------------------------------------------->
+
+
+<!------------------------------------ JAVASCRIPT ----------------------------------------->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+      $('body').scrollspy({
+        target: '.bs-docs-sidebar',
+         offset: 40
+                          });
+                  });
+    </script>
+    <!-- Loading mathjax macro -->
+    <!-- Load mathjax -->
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <!-- MathJax configuration -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <!-- End of mathjax configuration -->
+ 
+<!------------------------------------ JAVASCRIPT ----------------------------------------->
+</html>

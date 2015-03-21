@@ -170,19 +170,24 @@
             
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="#TOP">Python computing essentials</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#about">Under Construction</a></li>
+                <li><a href="#contact">Under Construction</a></li>
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tutorials<span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="./Statistics.html">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
+                     <li class="dropdown-header">Essentials in R and Python</li>
+                    <li><a href="Python_computing_essentials.html">Python computing essentials</a></li>
                     <li class="divider"></li>
-                    <li class="dropdown-header">Nav header</li>
-                    <li><a href="#">Separated link</a></li>
-                    <li><a href="#">One more separated link</a></li>
+                    <li class="dropdown-header">Graphics</li>
+                    <li><a href="Graphical_exploratory_data_analysis_with_R.html">Graphical exploratory data analysis with R</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Statistics</li>
+                    <li><a href="#">Work in progress</a></li>
+                    <li><a href="#">Work in progress</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Machine Learning</li>
+                    <li><a href="#">Work in progress</a></li>
+                    <li><a href="#">Work in progress</a></li>
                   </ul>
                 </li>
               </ul>
@@ -192,8 +197,7 @@
 
       </div>
     </div>
-<!---------------------- Navigation bar------------------------->  
-  
+<!---------------------- Navigation bar-------------------------> 
   
 <!-------------------------------------------------------------->  
   <div class="container bs-docs-container">
@@ -204,53 +208,38 @@
 
                    
            <h2> <a class="anchor" id="Strings"></a>  Strings</h2>
-             <p style="text-align:justify" >
-             Concerning the manipulation of strings in Python, it is opportune to highlight
-             how indexing of string elements starts from 0. Such rule applies to arrays as well.
-             If the reader is used to programming languages as MATLAB or is familiar with other
-             softwares for data analysis as R where indexing starts from 1, then it is here suggested
-             to keep a careful eye (two even better) on how elements are indexed in Python. In MATLAB
-             and R <span style="color:black;font-size:11pt;">str[1]</span> refers to the first element
-             of the arrays or string, whereas in Python it accesses the second element.
-             Having stressed this out, let's assume a generic string to be saved in the variable
-             <span style="color:black;font-size:11pt;">str</span>. In the trivial example here provided,
-             the hypothetical chosen string reads &quot;Machine learning in Python&quot; and contains 27
-             characters. Since indexing starts from 0, the last character to be accessed, i.e. &quot;.&quot;
-             is picked with the command <span style="color:black;font-size:11pt;">str[26]</span>, or in
-             parametrized form, <span style="color:black;font-size:11pt;">str[len(str)-1]</span>. In order
-             to extract a subset of the string, the command <span style="color:black;font-size:11pt;">
-             str[start:end:step]</span> is adopted.
-             </p>  
+             <p style="text-align:justify">
+Concerning the manipulation of strings in Python, it is opportune to highlight how indexing of string elements starts
+from 0. Such rule applies to arrays as well. If the reader (n.b. myserlf included) is used to programming languages as MATLAB or is familiar with
+other softwares for data analysis as R where indexing starts from 1, then it is suggested to keep a careful eye
+(two even better) on how elements are indexed in Python. In MATLAB and R <code>str[1]</code> refers to the first element of
+the array or string, whereas in Python it accesses the <strong>second</strong> element.Having stressed this out, let's
+assume a generic string to be saved in the variable <code>str</code>. In the trivial example here provided, the hypothetical
+chosen string reads "Machine learning in Python" and contains 27 characters. Since indexing starts from 0, the last character to
+be accessed, i.e. "." is picked with the command <code>str[26]</code>, or in parametrized form, <code>str[len(str)-1]</code>.
+In order to extract a subset of the string, the command <code>str[start:end:step]</code> can be adopted.</p>
              
-             <div class="highlight">
-              <pre style="text-align: left">
-<span class="nb">str</span><span class="o">=</span><span class="s">&quot;Machine learning in Python.&quot;</span>
+<div class=" highlight hl-ipython2"><pre><span class="nb">str</span><span class="o">=</span><span class="s">&quot;Machine learning in Python.&quot;</span>
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;SUMMARY&quot;</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;Input string: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;Length of string: </span><span class="si">%i</span><span class="s">&quot;</span> <span class="o">%</span><span class="k">len</span><span class="p">(</span><span class="nb">str</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Length of string: </span><span class="si">%i</span><span class="s">&quot;</span> <span class="o">%</span><span class="k">len</span>(str))
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;First and last characters in the string: &quot;</span><span class="o">+</span> <span class="nb">str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span><span class="s">&quot; and &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;Drop first word in the string: &quot;</span><span class="o">+</span> <span class="nb">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;Machine&quot;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;Drop first and last character in the string: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;Sample string with a 2-character step: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">[::</span><span class="mi">2</span><span class="p">])</span></pre>
-             </div>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Drop first and last character in the string: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Sample string with a 2-character step: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">[::</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
 
-            <pre>
+<pre style="background-color: transparent; border: 0px ">
 SUMMARY
 Input string: Machine learning in Python.
 Length of string: 27
 First and last characters in the string: M and .
 Drop first word in the string:  learning in Python.
-Drop first and last character in the string: achine learning in Pytho
-Sample string with a 2-character step: Mcielann nPto.</pre>
+Drop first and last character in the string: achine learning in Python
+Sample string with a 2-character step: Mcielann nPto.
+</pre>
              
-             
-             <div class="alert alert-block alert-warning alert-text-normal"><b>Summary.</b>   
-             <ol>
-             <li> $\sigma_{ij}=E\epsilon_{ij}$</li>
-             </ol>
-             </div>
-    
-    
+
             <h2> <a class="anchor" id="Mathematical_functions"></a> Mathematical functions</h2>
               <div class="highlight"><pre>
 <span class="kn">import</span> <span class="nn">math</span>
@@ -260,14 +249,65 @@ Sample string with a 2-character step: Mcielann nPto.</pre>
               </div>
 
 
-            <pre>
+<pre style="background-color: transparent; border: 0px ">
 Logarithm of 8 with base 2: 3.000000
 Cosine of 180 degree: -1.000000 
 Sine of 90 degree: 1.000000 </pre>
             
         
+<h2><a class="anchor" id="Lists"></a>Lists</h2>
+
+<div class=" highlight hl-ipython2"><pre><span class="n">ls</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;Start&#39;</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;hexa&#39;</span><span class="p">,</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span><span class="mi">12</span><span class="p">,</span><span class="s">&#39;End&#39;</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Random list&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">ls</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Appending a new element to the list&quot;</span><span class="p">)</span>
+<span class="n">ls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;New element&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">ls</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Deleting the first element of the list&quot;</span><span class="p">)</span>
+<span class="k">del</span> <span class="n">ls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">ls</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Numeric list with values ranging from -10 to 20 with a 2 stepsize&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;List generation with for loops&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">([</span><span class="n">x</span><span class="o">*</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)])</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Another list generated with for loops&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">([</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)])</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;List generation with while loop&quot;</span><span class="p">)</span>
+<span class="n">y</span><span class="o">=</span><span class="p">[]</span>
+<span class="n">x</span><span class="o">=</span><span class="mi">0</span>
+<span class="k">while</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">&lt;=</span><span class="mi">100</span><span class="p">:</span>
+ <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+ <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span>
+ <span class="k">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>        
         
-        
+
+<pre style="background-color: transparent; border: 0px ">Random list
+[&apos;Start&apos;, 20, &apos;a&apos;, &apos;hexa&apos;, -1.0, 12, &apos;End&apos;]
+Appending a new element to the list
+[&apos;Start&apos;, 20, &apos;a&apos;, &apos;hexa&apos;, -1.0, 12, &apos;End&apos;, &apos;New element&apos;]
+Deleting the first element of the list
+[20, &apos;a&apos;, &apos;hexa&apos;, -1.0, 12, &apos;End&apos;, &apos;New element&apos;]
+Numeric list with values ranging from -10 to 20 with a 2 stepsize
+[-10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+List generation with for loops
+[-6, -4, -2, 0, 2, 4]
+Another list generated with for loops
+[9, 4, 1, 0, 1, 4]
+List generation with while loop
+[0]
+[0, 1]
+[0, 1, 4]
+[0, 1, 4, 9]
+[0, 1, 4, 9, 16]
+[0, 1, 4, 9, 16, 25]
+[0, 1, 4, 9, 16, 25, 36]
+[0, 1, 4, 9, 16, 25, 36, 49]
+[0, 1, 4, 9, 16, 25, 36, 49, 64]
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+</pre>
+
         
              <h2> <a class="anchor" id="Functions"></a>Functions</h2>
                
@@ -293,7 +333,7 @@ Sine of 90 degree: 1.000000 </pre>
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;Present value of 1000$ resulting from an investment for 10 years with 1</span><span class="si">%%</span><span class="s"> interest: </span><span class="si">%f</span><span class="s">$&quot;</span> <span class="o">%</span><span class="k">pv</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">100</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span></pre>
 </div>
                 
-                <pre>
+<pre style="background-color: transparent; border: 0px ">
 Trivial function printing an input string
 The input string is: My first function.
 Future value of 1000$ invested for 10 years with 1% interest: 1104.622125$
@@ -318,8 +358,6 @@ Present value of 1000$ resulting from an investment for 10 years with 1% interes
             <li>
                 <a href="#Strings">Strings</a>
                 <ul class="nav nav-stacked">
-<!--                    <li><a href="#Mathematical_functions">Subsec01</a></li>
-                    <li><a href="#Functions">Subsec01</a></li>-->
                 </ul>
             </li>
             <li>
@@ -330,10 +368,15 @@ Present value of 1000$ resulting from an investment for 10 years with 1% interes
                 </ul>
             </li>
             <li>
+                <a href="#Lists">Lists</a>
+                <ul class="nav nav-stacked">
+                    <!--<li><a href="#Mathematical_functions">Subsec01</a></li>
+                    <li><a href="#Functions">Subsec01</a></li>-->
+                </ul>
+            </li>
+            <li>
                 <a href="#Functions">Functions</a>
                 <ul class="nav nav-stacked">
-<!--                    <li><a href="#Mathematical_functions">Subsec01</a></li>
-                    <li><a href="#Functions">Subsec01</a></li>-->
                 </ul>
             </li>     
         </ul>
@@ -344,7 +387,8 @@ Present value of 1000$ resulting from an investment for 10 years with 1% interes
     <!-- FOOTER --> 
         <footer>
         <p class="pull-right"><a href="#TOP">Back to top</a></p>
-        <p>&copy; 2015 </p>
+        <p>&copy; 2015. Webpage built with <a href='http://getbootstrap.com/'>Bootstrap</a> and rendered via
+        <a href='https://pages.github.com/'>Github pages</a>.</p>
       </footer>
   
   </div>  <!-- close environemnt <div class="container bs-docs-container"> -->
